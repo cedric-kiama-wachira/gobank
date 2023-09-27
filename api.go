@@ -3,6 +3,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -46,7 +47,7 @@ func (s *APIServer) Run() {
 
 	log.Println("Json API server running on port: ", s.listenAddr)
 
-	http.ListenAndServer(s.listenAddr, router)
+	http.ListenAndServe(s.listenAddr, router)
 }
 
 func (s *APIServer) handleAccount(w http.ResponseWriter, r *http.Request) error {
@@ -60,7 +61,7 @@ func (s *APIServer) handleAccount(w http.ResponseWriter, r *http.Request) error 
 		s.handleDeleteAccount(w, r)
 	}
 
-	return fmt.error("Method not allowed %s", r.Method)
+	return fmt.Errorf("Method not allowed %s", r.Method)
 
 }
 
